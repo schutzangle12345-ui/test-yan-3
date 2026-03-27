@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In | BookLux - AI Luxury Concierge</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600&display=swap');
+
+        :root {
+            --color-primary: #da1f22;
+            --color-primary-dark: #b91a1d;
+            --color-background: #ffffff;
+            --color-surface: #ffffff;
+            --color-text: #111111;
+            --color-text-muted: #666666;
+            --color-border: #e8e8e8;
+            --color-accent: #ffffff;
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --radius-lg: 32px;
+            --radius-md: 12px;
+            --container-width: 1200px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--color-background);
+            color: var(--color-text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Navigation */
+        header {
+            position: sticky;
+            top: 0;
+            background: var(--color-background);
+            border-bottom: 1px solid var(--color-border);
+            z-index: 1000;
+            padding: 1.25rem 0;
+        }
+
+        .nav-container {
+            max-width: var(--container-width);
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 2.5rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--color-text);
+            font-weight: 400;
+            font-size: 0.95rem;
+            transition: opacity 0.2s;
+        }
+
+        .nav-links a:hover {
+            opacity: 0.7;
+        }
+
+        .cta-button {
+            background-color: var(--color-primary);
+            color: var(--color-accent);
+            padding: 0.8rem 1.8rem;
+            border-radius: var(--radius-lg);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .cta-button:hover {
+            background-color: var(--color-primary-dark);
+        }
+
+        /* Auth Layout */
+        main {
+            min-height: calc(100vh - 200px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4rem 1.5rem;
+        }
+
+        .auth-card {
+            width: 100%;
+            max-width: 480px;
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-lg);
+            padding: 3rem 2.5rem;
+            text-align: center;
+        }
+
+        .auth-header {
+            margin-bottom: 2.5rem;
+        }
+
+        .auth-header img {
+            margin-bottom: 1.5rem;
+        }
+
+        .auth-header h1 {
+            font-weight: 100;
+            font-size: 2.2rem;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.5rem;
+        }
+
+        .auth-header h1 i {
+            font-style: italic;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid var(--color-border);
+            margin-bottom: 2.5rem;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 1rem;
+            background: none;
+            border: none;
+            font-family: inherit;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--color-text-muted);
+            cursor: pointer;
+            transition: all 0.2s;
+            border-bottom: 2px solid transparent;
+        }
+
+        .tab-btn.active {
+            color: var(--color-primary);
+            border-bottom-color: var(--color-primary);
+        }
+
+        /* Forms */
+        .auth-content {
+            text-align: left;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            margin-bottom: 0.5rem;
+            color: var(--color-text-muted);
+            font-weight: 500;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 1rem 1.25rem;
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-md);
+            font-family: inherit;
+            font-size: 1rem;
+            background: #fafafa;
+            transition: border-color 0.2s;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--color-primary);
+            background: white;
+        }
+
+        .submit-btn {
+            width: 100%;
+            background-color: var(--color-primary);
+            color: var(--color-accent);
+            padding: 1.1rem;
+            border-radius: var(--radius-lg);
+            border: none;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 1rem;
+            transition: background-color 0.2s;
+        }
+
+        .submit-btn:hover {
+            background-color: var(--color-primary-dark);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        #signin-form {
+            display: none;
+        }
+
+        /* Footer */
+        footer {
+            padding: 5rem 2rem;
+            border-top: 1px solid var(--color-border);
+            background-color: var(--color-background);
+        }
+
+        .footer-grid {
+            max-width: var(--container-width);
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+        }
+
+        .footer-brand h2 {
+            font-weight: 200;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer-links h4 {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-links a {
+            text-decoration: none;
+            color: var(--color-text-muted);
+            font-size: 0.95rem;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: var(--color-primary);
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1.25rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-icons svg {
+            width: 20px;
+            height: 20px;
+            fill: var(--color-text-muted);
+            transition: fill 0.2s;
+            cursor: pointer;
+        }
+
+        .social-icons svg:hover {
+            fill: var(--color-primary);
+        }
+
+        .copyright {
+            max-width: var(--container-width);
+            margin: 4rem auto 0;
+            padding-top: 2rem;
+            border-top: 1px solid var(--color-border);
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--color-text-muted);
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            .auth-card {
+                padding: 2.5rem 1.5rem;
+            }
+        }
+    </style>
+  <base href="/booklux/" />
+</head>
+<body>
+
+    <header>
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <img src="data:image/png;base64,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" alt="test-yan-3 logo" height="40">
+            </a>
+            <nav class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="auth.html" class="cta-button">Sign In</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="auth-card">
+            <div class="auth-header">
+                <h1>Book<i>Lux</i></h1>
+                <p style="color: var(--color-text-muted); font-size: 0.95rem;">Your private concierge awaits.</p>
+            </div>
+
+            <div class="tabs">
+                <button class="tab-btn active" id="signup-tab-trigger" onclick="showTab('signup')">Sign Up</button>
+                <button class="tab-btn" id="signin-tab-trigger" onclick="showTab('signin')">Sign In</button>
+            </div>
+
+            <div class="auth-content">
+                <!-- SIGN UP FORM -->
+                <form id="signup-form" data-backend="signup">
+                    <input type="hidden" name="role" value="user">
+                    
+                    <div class="form-group">
+                        <label>Email Address</label>
+                        <input type="email" name="email" class="form-input" placeholder="name@example.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" name="password" class="form-input" placeholder="Create a password" minlength="6" required>
+                    </div>
+
+                    <button type="submit" class="submit-btn">Create Account</button>
+                    
+                    <p data-success style="display:none; color: #10b981; font-weight: 500; margin-top: 1.5rem; text-align: center; font-size: 0.9rem; padding: 1rem; background: #ecfdf5; border-radius: var(--radius-md);">
+                        Registration successful! Please login.
+                    </p>
+                </form>
+
+                <!-- SIGN IN FORM (UI ONLY) -->
+                <form id="signin-form">
+                    <div class="form-group">
+                        <label>Email Address</label>
+                        <input type="email" name="email" class="form-input" placeholder="name@example.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" name="password" class="form-input" placeholder="Enter your password" required>
+                    </div>
+
+                    <button type="button" class="submit-btn">Sign In</button>
+                    <p style="text-align: center; margin-top: 1.5rem; font-size: 0.85rem;">
+                        <a href="#" style="color: var(--color-text-muted); text-decoration: none;">Forgot password?</a>
+                    </p>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <h2>Book<i>Lux</i></h2>
+                <p style="color: var(--color-text-muted); font-size: 0.9rem; max-width: 250px;">AI-driven luxury concierge for the world's most discerning travelers.</p>
+                <div class="social-icons">
+                    <svg viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/></svg>
+                    <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-
